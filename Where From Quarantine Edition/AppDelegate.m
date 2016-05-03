@@ -27,8 +27,8 @@
     sqlite3_close(db);
   }
   
-  NSString *query = @"SELECT LSQuarantineDataURLString FROM LSQuarantineEvent";
-//  NSString *query = @"SELECT LSQuarantineDataURLString FROM LSQuarantineEvent WHERE LSQuarantineDataURLString LIKE '%%Chrome%%'";
+  NSString *query = @"SELECT LSQuarantineDataURLString,LSQuarantineOriginURLString FROM LSQuarantineEvent";
+//  NSString *query = @"SELECT LSQuarantineDataURLString,LSQuarantineOriginURLString FROM LSQuarantineEvent WHERE LSQuarantineDataURLString LIKE '%%Chrome%%'";
   sqlite3_stmt * statement;
   
   if(sqlite3_prepare_v2(db, query.UTF8String, -1, &statement, nil) == SQLITE_OK) {
@@ -37,9 +37,13 @@
       if (field1 == NULL) {
         continue;
       }
-      NSString *field1Str = [[NSString alloc] initWithUTF8String:field1];
-      NSString *str = [[NSString alloc] initWithFormat:@"Source: %@", field1Str];
-      NSLog(@"%@",str);
+      NSString *dataURLStr = [[NSString alloc] initWithUTF8String:field1];
+      char *field2 = (char *) sqlite3_column_text(statement, 1);
+      NSString *originURLStr;
+      if (field2 != NULL) {
+         originURLStr = [[NSString alloc] initWithUTF8String:field2];
+      }
+      NSLog(@"\nData: %@\nOrigin: %@\n", dataURLStr, originURLStr);
     }
   }
 }
