@@ -27,12 +27,16 @@
     sqlite3_close(db);
   }
   
-  NSString *query = @"SELECT LSQuarantineDataURLString FROM LSQuarantineEvent WHERE LSQuarantineDataURLString LIKE '%%Chrome%%'";
+  NSString *query = @"SELECT LSQuarantineDataURLString FROM LSQuarantineEvent";
+//  NSString *query = @"SELECT LSQuarantineDataURLString FROM LSQuarantineEvent WHERE LSQuarantineDataURLString LIKE '%%Chrome%%'";
   sqlite3_stmt * statement;
   
   if(sqlite3_prepare_v2(db, query.UTF8String, -1, &statement, nil) == SQLITE_OK) {
     while(sqlite3_step(statement) == SQLITE_ROW) {
       char *field1 = (char *) sqlite3_column_text(statement, 0);
+      if (field1 == NULL) {
+        continue;
+      }
       NSString *field1Str = [[NSString alloc] initWithUTF8String:field1];
       NSString *str = [[NSString alloc] initWithFormat:@"Source: %@", field1Str];
       NSLog(@"%@",str);
