@@ -12,6 +12,12 @@ This simple script uses OS X' QuarantineEventsV2 sqlite database to retrieve the
 
 You can now track app usage based on the page or campaign where/when the download occured.
 
+## Example
+
+Output based on searching for `Chrome` downloads. I manually added `?ref=something_cool` to one of my downloads.
+
+![Output when searching for downloads matching Chrome](https://raw.githubusercontent.com/boyvanamstel/Where-From-Quarantine-Edition/master/screenshots/example.jpg)
+
 ## License
 
 MIT, check `LICENSE`.
