@@ -25,6 +25,7 @@
   sqlite3 *db;
   if(sqlite3_open(sqlitePath.UTF8String, &(db)) != SQLITE_OK) {
     sqlite3_close(db);
+    return;
   }
   
   NSString *query = @"SELECT LSQuarantineDataURLString,LSQuarantineOriginURLString FROM LSQuarantineEvent";
